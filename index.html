@@ -56,6 +56,10 @@
                 box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
             }
 
+            .final-hero-gif {
+                padding-right: 150px;
+            }
+
             .button-area {
                 position: relative;
                 margin: 28px auto 0;
@@ -119,7 +123,7 @@
             }
 
             .confetti img {
-                width: min(300px, 78vw);
+                width: min(1000px, 78vw);
                 margin-top: 12px;
             }
         </style>
@@ -128,7 +132,9 @@
         <main class="card">
             <h1 class="title">Will you be my Valentine?</h1>
             <p class="subtitle">You make my heart do tiny happy dances. 💗</p>
+
             <img
+                id="firstGif"
                 class="hero-gif"
                 src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDU4ZjU2MzhsZnFnYW42MGxycTZwcHpnbHQwdjk5M2FsYTRyc3Z2YSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/wvYNSqBAMDVx8CEYkt/giphy.gif"
                 alt="A cute bear holding a heart"
@@ -142,6 +148,7 @@
             <div class="result" id="resultText" aria-live="polite"></div>
             <div class="confetti hidden" id="confetti">
                 <img
+                    class="final-hero-gif"
                     src="https://media.giphy.com/media/26tOZ42Mg6pbTUPHW/giphy.gif"
                     alt="Confetti celebration animation"
                 />
@@ -154,16 +161,21 @@
             const buttonArea = document.getElementById("buttonArea");
             const resultText = document.getElementById("resultText");
             const confetti = document.getElementById("confetti");
+            const firstGif = document.getElementById("firstGif");
 
             const yesSteps = [
                 { label: "I need a more enthusiastic yes", scale: 1.15 },
                 { label: "Some more enthusiasm", scale: 1.5 },
-                { label: "MORE FUCKING ENTHUSIASM", scale: 2.0 },
+                { label: "MORE FUCKING ENTHUSIASM!!!", scale: 2.0 },
                 {
                     label: "Sorry for yelling my love, But a little more",
                     scale: 2.0,
                 },
-                { label: "YAAAAAY", scale: 1.45, celebrate: true },
+                {
+                    label: "YAAAAAAAAAAAY!!!!!!!!!!!",
+                    scale: 1.45,
+                    celebrate: true,
+                },
             ];
 
             let yesStepIndex = 0;
@@ -196,15 +208,22 @@
                     return;
                 }
 
+                // Hide NO button on the very first click
+                if (yesStepIndex === 0) {
+                    noButton.classList.add("hidden");
+                    noButton.setAttribute("aria-hidden", "true");
+                }
+
                 const step = yesSteps[yesStepIndex];
                 yesButton.textContent = step.label;
                 yesButton.style.setProperty("--yes-scale", step.scale);
 
                 if (step.celebrate) {
-                    resultText.textContent = "YAAAAAY";
+                    resultText.textContent = "YAAAAAAAAY!!!!";
                     confetti.classList.remove("hidden");
-                    noButton.classList.add("hidden");
-                    noButton.setAttribute("aria-hidden", "true");
+
+                    // Hide the original GIF when celebration starts
+                    firstGif.classList.add("hidden");
                 }
 
                 yesStepIndex += 1;
